@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konstantina Kanta</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    a { color: #2563eb; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    header {
+      background: #1e293b;
+      color: #fff;
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px; }
+    header p.tagline {
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      color: #94a3b8;
+    }
+    header .contacts {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.5rem;
+    }
+    header .contacts a { color: #93c5fd; }
+
+    nav {
+      background: #0f172a;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    nav a {
+      color: #94a3b8;
+      padding: 0.75rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.15s;
+    }
+    nav a:hover { color: #fff; text-decoration: none; }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    section { margin-bottom: 3rem; }
+    section:last-child { margin-bottom: 0; }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1e293b;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.4rem;
+    }
+
+    /* ── Experience / Education entries ── */
+    .entry { margin-bottom: 1.6rem; }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+    .entry-title { font-weight: 600; font-size: 1rem; }
+    .entry-date { font-size: 0.85rem; color: #64748b; white-space: nowrap; }
+    .entry-org { font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem; }
+
+    ul.bullets {
+      padding-left: 1.3rem;
+      margin-top: 0.4rem;
+    }
+    ul.bullets li { margin-bottom: 0.35rem; font-size: 0.93rem; color: #334155; }
+
+    .methods {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-group { }
+    .skill-label { font-weight: 600; font-size: 0.85rem; color: #1e293b; margin-bottom: 0.2rem; }
+    .skill-value { font-size: 0.88rem; color: #475569; }
+
+    /* ── Projects ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+    .project-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: #f8fafc;
+    }
+    .project-card h3 { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 0.3rem; }
+    .project-card .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-radius: 4px;
+      padding: 0.1rem 0.45rem;
+      margin-bottom: 0.6rem;
+    }
+    .project-card p { font-size: 0.88rem; color: #475569; line-height: 1.55; }
+
+    /* ── Publication ── */
+    .pub {
+      background: #f0f9ff;
+      border-left: 4px solid #2563eb;
+      padding: 0.9rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .pub strong { color: #1e293b; }
+
+    /* ── About ── */
+    #about p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.6rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .entry-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Konstantina Kanta</h1>
+  <p class="tagline">Research Scientist · Machine Learning · Applied AI &amp; Healthcare</p>
+  <div class="contacts">
+    <span>Hamburg, Germany</span>
+    <a href="mailto:konstantinakanta@pm.me">konstantinakanta@pm.me</a>
+    <a href="https://github.com/konstantinakanta" target="_blank">github.com/konstantinakanta</a>
+  </div>
+</header>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#education">Education</a>
+  <a href="#publications">Publications</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+</nav>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About</h2>
+    <p>I'm a Research Scientist at <a href="https://www.beiersdorf.com" target="_blank">Beiersdorf</a> in Hamburg, working across the full data-science stack: from raw sensor measurements and biological data, through statistical modeling and machine learning, to production deployment on Azure.</p>
+    <p>My work spans time-series analysis, computer vision, NLP, and MLOps. I build and maintain end-to-end pipelines — from data ingestion and preprocessing to model deployment and monitoring.</p>
+    <p>Before Beiersdorf, I was a Data Scientist at Shutterstock in Dublin (search &amp; ranking), and a Cloud Integration Engineer at Ericsson. I hold an MSc in Computer Science from University College Dublin and an MSc in Electrical &amp; Computer Engineering from the Democritus University of Thrace.</p>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">Research Scientist</span>
+        <span class="entry-date">Sept 2022 — Present</span>
+      </div>
+      <div class="entry-org">Beiersdorf AG (Nivea) · Hamburg, DE</div>
+      <ul class="bullets">
+        <li><strong>Female Health initiative.</strong> Led development of time-series forecasting and clustering models to characterise patterns between menstrual cycles and skin health.
+          <div class="methods">Methods: data preprocessing, EDA, outlier detection, K-means clustering</div>
+        </li>
+        <li><strong>Skin Types initiative.</strong> Built a unified skin-type framework integrating multi-modal device measurements (Skinly) with self-reported lifestyle data into holistic profiles for segmentation and personalisation analyses.</li>
+        <li><strong>Skin Topography Pipeline (Primos).</strong> Maintain and modernise a longitudinal computer-vision pipeline that quantifies wrinkle reduction across 2- and 4-week treatment intervals from 3D topography scans. Work spans Python/library upgrades, dashboarding, bug fixing, CI/CD on Azure DevOps and GitHub.</li>
+        <li><strong>Skin moisture stability model.</strong> Developed and deployed a time-series ML model identifying stable phases in skin-moisture sensor data using differential-based feature extraction.
+          <div class="methods">Methods: time series, signal smoothing, model and performance optimisation</div>
+        </li>
+        <li><strong>Production ETL pipeline.</strong> Built a pipeline unifying product records from multiple sources using Python NLP (entity matching) and computer vision (object detection, OCR), loaded into Azure Data Lake.</li>
+        <li><strong>Statistical analysis of aging.</strong> Multivariate regression with confounder control to estimate impact of external factors on biological age.
+          <div class="methods">Methods: OLS regression, bootstrapping, covariate adjustment, VIF assessment</div>
+        </li>
+        <li><strong>MLOps &amp; Azure.</strong> Build and operationalise ML pipelines on Azure ML and Azure DevOps — CI/CD, model deployment, monitoring, integration with Azure Data Lake and Databricks.</li>
+        <li>Supervise and mentor working students and new joiners. Represented the team in presentations to Members of the European Parliament.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">Data Scientist</span>
+        <span class="entry-date">Feb 2022 — Aug 2022</span>
+      </div>
+      <div class="entry-org">Shutterstock, Inc. · Dublin, IE</div>
+      <ul class="bullets">
+        <li>Led the <strong>Search Fusion</strong> project to merge results from multiple recommendation systems based on rank.</li>
+        <li>Implemented reciprocal rank fusion, achieving a <strong>10% improvement</strong> in accuracy over benchmark systems.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">Cloud Integration Engineer</span>
+        <span class="entry-date">June 2020 — Feb 2022</span>
+      </div>
+      <div class="entry-org">Ericsson · Dublin, IE</div>
+      <ul class="bullets">
+        <li>Primary support contact for global internal stakeholders; handled Customer Support Requests and provided technical guidance.</li>
+        <li>Led integration and deployment of Ericsson cloud solutions across Linux, MySQL, Kubernetes, Docker, and OpenStack.</li>
+        <li>Integrated Cloud Container Distribution (CCD) clusters; deployed applications from Docker images in Kubernetes pods.</li>
+        <li>Owned integration planning and deployment of Ericsson's Cloud Execution Environment, including acceptance testing for SDI.</li>
+        <li>Customers included AT&amp;T, Three IE, NTT Docomo, and Bharti Airtel.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">Database &amp; Information Systems Demonstrator</span>
+        <span class="entry-date">Sept 2019 — Dec 2019</span>
+      </div>
+      <div class="entry-org">University College Dublin · Dublin, IE</div>
+      <ul class="bullets">
+        <li>Demonstrator for the second-year undergraduate Computer Science module; graded weekly and final SQL assignments.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <h2>Education</h2>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">MSc Computer Science</span>
+        <span class="entry-date">Sept 2019 — Aug 2020</span>
+      </div>
+      <div class="entry-org">University College Dublin · GPA 3.57/4.2 (2:1 Honours) · 90 ECTS</div>
+      <p style="font-size:0.88rem;color:#475569;">Advanced Machine Learning, Big Data, NLP, Multi-Agent Systems (AI), SQL Programming, Data Visualisation.</p>
+    </div>
+
+    <div class="entry">
+      <div class="entry-header">
+        <span class="entry-title">MSc Electrical &amp; Computer Engineering</span>
+        <span class="entry-date">Oct 2013 — Nov 2018</span>
+      </div>
+      <div class="entry-org">Democritus University of Thrace · GPA 7.8/10.0 (2:1 Honours) · 300 ECTS</div>
+      <p style="font-size:0.88rem;color:#475569;">Machine Learning, Robotics, Numerical Analysis, Data Mining, Information Retrieval, Linear Algebra.</p>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS & TALKS -->
+  <section id="publications">
+    <h2>Publications &amp; Talks</h2>
+
+    <div class="pub" style="margin-bottom:1rem;">
+      <strong>Unraveling the complexity of skin's biological aging utilizing epigenetic clocks.</strong><br>
+      Bienkowska A, Qi M, <strong>Kanta K</strong>, Bonilla-Tobar M del P, Völzke H, Gallinat S, Jaspers S, Clemann S, Winnefeld M, Grönniger E, Kaderali L.<br>
+      <em>Clinical Epigenetics</em> 18, 58 (2026). <a href="https://doi.org/10.1186/s13148-026-02101-4" target="_blank">doi:10.1186/s13148-026-02101-4</a><br>
+      <span style="font-size:0.82rem;color:#64748b;">Contributed the section on Skinly — Beiersdorf's handheld IoT device for objective phenotypic skin measurements — and the associated phenotypic-aging analysis.</span>
+    </div>
+
+    <div class="pub">
+      <strong>AI in Healthcare</strong> — Invited guest lecture, University of Portsmouth (host: Dr Elisavet Andrikopoulou). April 2026.
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-label">Programming &amp; ML</div>
+        <div class="skill-value">Python (pandas, NumPy, scikit-learn, PyTorch, TensorFlow), R, SQL, C/C++, Java, JavaScript</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Data &amp; Big Data</div>
+        <div class="skill-value">Spark, Hadoop, Databricks, MongoDB</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Cloud &amp; MLOps</div>
+        <div class="skill-value">Azure ML, Azure DevOps, Azure Data Lake, Databricks, Docker, Kubernetes, Git, CI/CD</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Statistics &amp; ML</div>
+        <div class="skill-value">Time-series forecasting, regression, A/B testing, clustering, NLP, LLM prompt engineering</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Computer Vision</div>
+        <div class="skill-value">Object detection, OCR, image-pipeline development</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Visualisation</div>
+        <div class="skill-value">Power BI, Tableau, Vega-Lite, Plotly</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Tools</div>
+        <div class="skill-value">Jupyter, VS Code, Linux/Ubuntu, MATLAB, Jira</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="skill-value">Greek (native), English (fluent)</div>
+      </div>
+    </div>
+
+    <div style="margin-top:1.2rem;font-size:0.88rem;color:#64748b;">
+      <strong>Certifications &amp; Courses</strong>
+      <ul style="margin-top:0.4rem;padding-left:1.3rem;">
+        <li>Run Pipelines in Azure Machine Learning — Microsoft Learn badge, March 2026</li>
+        <li>Skin Anatomy and Physiology — UCD Microcredential, April 2026</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="badge">Research</div>
+        <h3>Pneumonia Detection from Chest X-rays</h3>
+        <p>Compared four deep-learning architectures (logistic regression baseline, LeNet-5, custom CNN with data augmentation, VGG16) for binary pneumonia classification on chest X-ray images. Transfer learning from ImageNet with VGG16 performed best. Implemented in Python with scikit-learn, OpenCV, Keras, and PyTorch.</p>
+      </div>
+
+      <div class="project-card">
+        <div class="badge">Research</div>
+        <h3>Fusing Rankings in Information Retrieval with Voting Systems</h3>
+        <p>Diploma thesis at DUTh. Evaluated voting-system approaches to rank fusion (Borda, RRF, Condorcet, CombSUM/MNZ) on standard IR test collections using TREC Eval. Reciprocal rank fusion proved consistently strongest — the same method later drove a 10% accuracy gain at Shutterstock.</p>
+      </div>
+
+      <div class="project-card">
+        <div class="badge">Code</div>
+        <h3>Multi-label Classifier from Scratch</h3>
+        <p>From-scratch implementation of Binary Relevance (with optional under-sampling) and Classifier Chains for multi-label classification. Built to internalise every design decision — thresholding, imbalance handling, label-correlation effects — rather than relying on library defaults.</p>
+      </div>
+
+      <div class="project-card">
+        <div class="badge">Code · Coming soon</div>
+        <h3>rrf — Reciprocal Rank Fusion library</h3>
+        <p>A small open-source Python package implementing RRF and related fusion methods (Borda, CombSUM, CombMNZ), plus a reproducible benchmark notebook on a public IR dataset. Motivated by RRF's recurring role in my work — from my thesis through Shutterstock to modern RAG pipelines.</p>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Konstantina Kanta · Hamburg · <a href="mailto:konstantinakanta@pm.me">konstantinakanta@pm.me</a></p>
+</footer>
+
+</body>
+</html>
