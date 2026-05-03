@@ -4,190 +4,490 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Konstantina Kanta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --coral:   #ff6b6b;
+      --teal:    #00c9a7;
+      --yellow:  #ffd93d;
+      --purple:  #a855f7;
+      --blue:    #3b82f6;
+      --pink:    #f472b6;
+      --dark:    #0f0e17;
+      --ink:     #1a1a2e;
+      --soft:    #4a4a6a;
+      --bg:      #fafaf8;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-family: "Inter", sans-serif;
       font-size: 16px;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: #fff;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--bg);
+      overflow-x: hidden;
     }
 
-    a { color: #2563eb; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: inherit; text-decoration: none; }
 
-    /* ── Layout ── */
+    /* ── HERO ── */
     header {
-      background: #1e293b;
-      color: #fff;
-      padding: 3rem 1.5rem 2.5rem;
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 3rem 2rem;
+      position: relative;
+      overflow: hidden;
     }
-    header h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px; }
-    header p.tagline {
-      margin-top: 0.5rem;
-      font-size: 1.05rem;
-      color: #94a3b8;
+
+    /* animated blobs */
+    header::before, header::after, .blob3 {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: drift 8s ease-in-out infinite alternate;
     }
-    header .contacts {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #cbd5e1;
+    header::before {
+      width: 500px; height: 500px;
+      background: var(--purple);
+      top: -100px; left: -100px;
+    }
+    header::after {
+      width: 400px; height: 400px;
+      background: var(--coral);
+      bottom: -80px; right: -80px;
+      animation-delay: -3s;
+    }
+    .blob3 {
+      width: 300px; height: 300px;
+      background: var(--teal);
+      bottom: 20%; left: 50%;
+      transform: translateX(-50%);
+      animation-delay: -6s;
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.1); }
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      border: 1px solid var(--teal);
+      border-radius: 20px;
+      padding: 0.3rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    header h1 {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: -2px;
+    }
+    header h1 span.line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--coral), var(--yellow), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #9999bb;
+      max-width: 480px;
+    }
+
+    .hero-links {
+      margin-top: 2rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.5rem 1.5rem;
+      gap: 0.75rem;
     }
-    header .contacts a { color: #93c5fd; }
+    .hero-links a {
+      padding: 0.55rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .hero-links a:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-coral { background: var(--coral); color: #fff; }
+    .btn-outline { border: 1.5px solid #555; color: #ccc; }
+    .btn-outline:hover { border-color: #999; color: #fff; }
 
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #555;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      z-index: 1;
+    }
+    .scroll-hint::after {
+      content: "";
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, #555, transparent);
+      animation: scrollline 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollline {
+      0%,100% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── NAV ── */
     nav {
-      background: #0f172a;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #eee;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 0;
+      padding: 0 1rem;
     }
     nav a {
-      color: #94a3b8;
-      padding: 0.75rem 1.1rem;
-      font-size: 0.85rem;
-      font-weight: 500;
+      color: var(--soft);
+      padding: 0.85rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.07em;
       transition: color 0.15s;
     }
-    nav a:hover { color: #fff; text-decoration: none; }
+    nav a:hover { color: var(--coral); }
 
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
-    }
+    /* ── MAIN ── */
+    main { max-width: 960px; margin: 0 auto; padding: 5rem 1.5rem; }
 
-    section { margin-bottom: 3rem; }
-    section:last-child { margin-bottom: 0; }
-
-    h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #1e293b;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1.4rem;
-    }
-
-    /* ── Experience / Education entries ── */
-    .entry { margin-bottom: 1.6rem; }
-    .entry-header {
+    /* ── SECTION HEADERS ── */
+    .section-label {
       display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .section-num {
+      font-family: "Syne", sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+      opacity: 0.12;
+      color: var(--ink);
+      user-select: none;
+    }
+    .section-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+    .section-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, #e5e5e5, transparent);
+    }
+
+    section { margin-bottom: 5rem; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .about-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid #eee;
+    }
+    .about-card.wide { grid-column: 1 / -1; }
+    .about-card p { font-size: 0.95rem; color: var(--soft); }
+    .about-card .card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--coral), var(--purple), var(--teal));
+      border-radius: 2px;
+    }
+    .tl-entry { position: relative; margin-bottom: 2.5rem; }
+    .tl-dot {
+      position: absolute;
+      left: -1.5rem;
+      top: 6px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px currentColor;
+      transform: translateX(-4px);
+    }
+    .tl-header {
+      display: flex;
+      align-items: flex-start;
       justify-content: space-between;
-      align-items: baseline;
       flex-wrap: wrap;
-      gap: 0.25rem;
+      gap: 0.4rem;
+      margin-bottom: 0.2rem;
     }
-    .entry-title { font-weight: 600; font-size: 1rem; }
-    .entry-date { font-size: 0.85rem; color: #64748b; white-space: nowrap; }
-    .entry-org { font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem; }
-
-    ul.bullets {
-      padding-left: 1.3rem;
-      margin-top: 0.4rem;
+    .tl-title { font-weight: 700; font-size: 1rem; }
+    .tl-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.7rem;
+      border-radius: 20px;
+      color: #fff;
+      white-space: nowrap;
     }
-    ul.bullets li { margin-bottom: 0.35rem; font-size: 0.93rem; color: #334155; }
+    .tl-org { font-size: 0.85rem; color: var(--soft); margin-bottom: 0.5rem; }
 
+    /* expandable */
+    details { margin-bottom: 0.25rem; }
+    details summary {
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--soft);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before {
+      content: "▾";
+      font-size: 0.85rem;
+      color: #aaa;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    details:not([open]) summary::before { transform: rotate(-90deg); }
+    details summary:hover { color: var(--ink); }
+    details summary:hover::before { color: var(--coral); }
+    .detail-body {
+      margin: 0.3rem 0 0.5rem 0.5rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.86rem;
+      color: var(--soft);
+      line-height: 1.6;
+      border-left: 2px solid #eee;
+    }
     .methods {
-      font-size: 0.8rem;
-      color: #64748b;
+      display: block;
       margin-top: 0.3rem;
+      font-size: 0.78rem;
+      color: #999;
       font-style: italic;
     }
 
-    /* ── Skills ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .skill-group { }
-    .skill-label { font-weight: 600; font-size: 0.85rem; color: #1e293b; margin-bottom: 0.2rem; }
-    .skill-value { font-size: 0.88rem; color: #475569; }
+    ul.bullets { padding-left: 1.2rem; margin-top: 0.4rem; }
+    ul.bullets li { margin-bottom: 0.3rem; font-size: 0.9rem; color: var(--soft); }
 
-    /* ── Projects ── */
+    /* ── SKILLS ── */
+    .skills-section { display: flex; flex-direction: column; gap: 1.2rem; }
+    .skill-row { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+    .skill-cat {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      min-width: 130px;
+      color: var(--ink);
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      border: 1.5px solid;
+    }
+    .tag-coral  { color: var(--coral);  border-color: var(--coral);  background: #fff5f5; }
+    .tag-teal   { color: #009f82;       border-color: var(--teal);   background: #f0fdf9; }
+    .tag-blue   { color: var(--blue);   border-color: var(--blue);   background: #eff6ff; }
+    .tag-purple { color: var(--purple); border-color: var(--purple); background: #faf5ff; }
+    .tag-yellow { color: #b45309;       border-color: var(--yellow); background: #fffbeb; }
+    .tag-pink   { color: #db2777;       border-color: var(--pink);   background: #fdf2f8; }
+
+    .certs-row {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #eee;
+    }
+    .certs-row .skill-cat { margin-bottom: 0.5rem; }
+    .certs-row ul { padding-left: 1.2rem; }
+    .certs-row li { font-size: 0.88rem; color: var(--soft); margin-bottom: 0.25rem; }
+
+    /* ── PUBLICATIONS ── */
+    .pub-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #eee;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .pub-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .pub-card.paper::before { background: linear-gradient(90deg, var(--coral), var(--yellow)); }
+    .pub-card.talk::before  { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+    .pub-card .pub-type {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .pub-card.paper .pub-type { color: var(--coral); }
+    .pub-card.talk  .pub-type { color: var(--teal); }
+    .pub-card p { font-size: 0.9rem; color: var(--soft); line-height: 1.65; }
+    .pub-card a { color: var(--blue); font-weight: 500; }
+    .pub-card a:hover { text-decoration: underline; }
+
+    /* ── PROJECTS ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
       gap: 1.25rem;
     }
     .project-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 1.25rem;
-      background: #f8fafc;
+      border-radius: 18px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid transparent;
     }
-    .project-card h3 { font-size: 0.95rem; font-weight: 600; color: #1e293b; margin-bottom: 0.3rem; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .pc-1 { background: #fff8f8; }
+    .pc-1::before { background: linear-gradient(135deg, var(--coral), var(--yellow)); }
+    .pc-2 { background: #f0fdf9; }
+    .pc-2::before { background: linear-gradient(135deg, var(--teal), var(--blue)); }
+    .pc-3 { background: #faf5ff; }
+    .pc-3::before { background: linear-gradient(135deg, var(--purple), var(--pink)); }
+    .pc-4 { background: #fffbeb; }
+    .pc-4::before { background: linear-gradient(135deg, var(--yellow), var(--coral)); }
+
     .project-card .badge {
       display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
+      font-size: 0.68rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: #dbeafe;
-      color: #1d4ed8;
-      border-radius: 4px;
-      padding: 0.1rem 0.45rem;
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.07em;
+      border-radius: 20px;
+      padding: 0.15rem 0.65rem;
+      margin-bottom: 0.7rem;
+      border: 1.5px solid;
     }
-    .project-card p { font-size: 0.88rem; color: #475569; line-height: 1.55; }
+    .pc-1 .badge { color: var(--coral); border-color: var(--coral); background: #fff5f5; }
+    .pc-2 .badge { color: #009f82; border-color: var(--teal); background: #f0fdf9; }
+    .pc-3 .badge { color: var(--purple); border-color: var(--purple); background: #faf5ff; }
+    .pc-4 .badge { color: #b45309; border-color: var(--yellow); background: #fffbeb; }
 
-    /* ── Publication ── */
-    .pub {
-      background: #f0f9ff;
-      border-left: 4px solid #2563eb;
-      padding: 0.9rem 1rem;
-      border-radius: 0 6px 6px 0;
-      font-size: 0.9rem;
-      color: #334155;
-      line-height: 1.6;
-    }
-    .pub strong { color: #1e293b; }
+    .project-card h3 { font-size: 0.97rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .project-card p  { font-size: 0.87rem; color: var(--soft); line-height: 1.6; }
 
-    /* ── About ── */
-    #about p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
-
+    /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: #94a3b8;
-      border-top: 1px solid #e2e8f0;
+      padding: 3rem 1.5rem;
+      background: var(--dark);
+      color: #555;
+      font-size: 0.82rem;
     }
+    footer a { color: var(--teal); }
+    footer a:hover { text-decoration: underline; }
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.6rem; }
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-card.wide { grid-column: auto; }
       .projects-grid { grid-template-columns: 1fr; }
-      .entry-header { flex-direction: column; }
+      .skill-cat { min-width: 100%; }
     }
   </style>
 </head>
 <body>
 
+<!-- HERO -->
 <header>
-  <h1>Konstantina Kanta</h1>
-  <p class="tagline">Research Scientist · Machine Learning · Applied AI &amp; Healthcare</p>
-  <div class="contacts">
-    <span>Hamburg, Germany</span>
-    <a href="mailto:konstantinakanta@pm.me">konstantinakanta@pm.me</a>
-    <a href="https://github.com/konstantinakanta" target="_blank">github.com/konstantinakanta</a>
+  <div class="blob3"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Research Scientist · Hamburg</div>
+    <h1>
+      Konstantina<br>
+      <span class="line2">Kanta</span>
+    </h1>
+    <p class="hero-desc">Machine learning, time-series analysis, and applied AI — from sensor data to production pipelines.</p>
+    <div class="hero-links">
+      <a href="mailto:konstantinakanta@pm.me" class="btn-coral">Get in touch</a>
+      <a href="https://github.com/konstantinakanta" target="_blank" class="btn-outline">GitHub ↗</a>
+    </div>
   </div>
+  <div class="scroll-hint">scroll</div>
 </header>
 
+<!-- NAV -->
 <nav>
   <a href="#about">About</a>
   <a href="#experience">Experience</a>
@@ -201,201 +501,252 @@
 
   <!-- ABOUT -->
   <section id="about">
-    <h2>About</h2>
-    <p>I'm a Research Scientist at <a href="https://www.beiersdorf.com" target="_blank">Beiersdorf</a> in Hamburg, working across the full data-science stack: from raw sensor measurements and biological data, through statistical modeling and machine learning, to production deployment on Azure.</p>
-    <p>My work spans time-series analysis, computer vision, NLP, and MLOps. I build and maintain end-to-end pipelines — from data ingestion and preprocessing to model deployment and monitoring.</p>
-    <p>Before Beiersdorf, I was a Data Scientist at Shutterstock in Dublin (search &amp; ranking), and a Cloud Integration Engineer at Ericsson. I hold an MSc in Computer Science from University College Dublin and an MSc in Electrical &amp; Computer Engineering from the Democritus University of Thrace.</p>
+    <div class="section-label">
+      <span class="section-num">01</span>
+      <span class="section-title">About</span>
+      <span class="section-line"></span>
+    </div>
+    <div class="about-grid">
+      <div class="about-card wide">
+        <p>I'm a Research Scientist at <a href="https://www.beiersdorf.com" target="_blank" style="color:var(--coral);font-weight:600;">Beiersdorf</a> in Hamburg, working across the full data-science stack: from raw sensor measurements and biological data, through statistical modeling and machine learning, to production deployment on Azure.</p>
+      </div>
+      <div class="about-card">
+        <div class="card-label" style="color:var(--teal);">What I do</div>
+        <p>Time-series analysis, computer vision, NLP, MLOps. I build end-to-end pipelines — from data ingestion to model deployment and monitoring.</p>
+      </div>
+      <div class="about-card">
+        <div class="card-label" style="color:var(--coral);">Background</div>
+        <p>Data Scientist at Shutterstock · Cloud Engineer at Ericsson · MSc Computer Science (UCD) · MSc Electrical &amp; Computer Engineering (DUTh)</p>
+      </div>
+    </div>
   </section>
 
   <!-- EXPERIENCE -->
   <section id="experience">
-    <h2>Experience</h2>
-
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">Research Scientist</span>
-        <span class="entry-date">Sept 2022 — Present</span>
-      </div>
-      <div class="entry-org">Beiersdorf AG (Nivea) · Hamburg, DE</div>
-      <ul class="bullets">
-        <li><strong>Female Health initiative.</strong> Led development of time-series forecasting and clustering models to characterise patterns between menstrual cycles and skin health.
-          <div class="methods">Methods: data preprocessing, EDA, outlier detection, K-means clustering</div>
-        </li>
-        <li><strong>Skin Types initiative.</strong> Built a unified skin-type framework integrating multi-modal device measurements (Skinly) with self-reported lifestyle data into holistic profiles for segmentation and personalisation analyses.</li>
-        <li><strong>Skin Topography Pipeline (Primos).</strong> Maintain and modernise a longitudinal computer-vision pipeline that quantifies wrinkle reduction across 2- and 4-week treatment intervals from 3D topography scans. Work spans Python/library upgrades, dashboarding, bug fixing, CI/CD on Azure DevOps and GitHub.</li>
-        <li><strong>Skin moisture stability model.</strong> Developed and deployed a time-series ML model identifying stable phases in skin-moisture sensor data using differential-based feature extraction.
-          <div class="methods">Methods: time series, signal smoothing, model and performance optimisation</div>
-        </li>
-        <li><strong>Production ETL pipeline.</strong> Built a pipeline unifying product records from multiple sources using Python NLP (entity matching) and computer vision (object detection, OCR), loaded into Azure Data Lake.</li>
-        <li><strong>Statistical analysis of aging.</strong> Multivariate regression with confounder control to estimate impact of external factors on biological age.
-          <div class="methods">Methods: OLS regression, bootstrapping, covariate adjustment, VIF assessment</div>
-        </li>
-        <li><strong>MLOps &amp; Azure.</strong> Build and operationalise ML pipelines on Azure ML and Azure DevOps — CI/CD, model deployment, monitoring, integration with Azure Data Lake and Databricks.</li>
-        <li>Supervise and mentor working students and new joiners. Represented the team in presentations to Members of the European Parliament.</li>
-      </ul>
+    <div class="section-label">
+      <span class="section-num">02</span>
+      <span class="section-title">Experience</span>
+      <span class="section-line"></span>
     </div>
+    <div class="timeline">
 
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">Data Scientist</span>
-        <span class="entry-date">Feb 2022 — Aug 2022</span>
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--coral);"></div>
+        <div class="tl-header">
+          <span class="tl-title">Research Scientist</span>
+          <span class="tl-date" style="background:var(--coral);">Sept 2022 — Present</span>
+        </div>
+        <div class="tl-org">Beiersdorf AG (Nivea) · Hamburg, DE</div>
+        <details><summary><strong>Female Health initiative</strong></summary>
+          <div class="detail-body">Led development of time-series forecasting and clustering models to characterise patterns between menstrual cycles and skin health. <span class="methods">Methods: data preprocessing, EDA, outlier detection, K-means clustering.</span></div>
+        </details>
+        <details><summary><strong>Skin Types initiative</strong></summary>
+          <div class="detail-body">Built a unified skin-type framework integrating multi-modal device measurements (Skinly) with self-reported lifestyle data into holistic profiles for segmentation and personalisation analyses.</div>
+        </details>
+        <details><summary><strong>Skin Topography Pipeline (Primos)</strong></summary>
+          <div class="detail-body">Maintain and modernise a longitudinal computer-vision pipeline that quantifies wrinkle reduction across 2- and 4-week treatment intervals from 3D topography scans. Work spans Python/library upgrades, dashboarding, bug fixing, CI/CD on Azure DevOps and GitHub.</div>
+        </details>
+        <details><summary><strong>Skin moisture stability model</strong></summary>
+          <div class="detail-body">Developed and deployed a time-series ML model identifying stable phases in skin-moisture sensor data using differential-based feature extraction. <span class="methods">Methods: time series, signal smoothing, model and performance optimisation.</span></div>
+        </details>
+        <details><summary><strong>Production ETL pipeline</strong></summary>
+          <div class="detail-body">Built a pipeline unifying product records from multiple sources using Python NLP (entity matching) and computer vision (object detection, OCR), loaded into Azure Data Lake.</div>
+        </details>
+        <details><summary><strong>Statistical analysis of aging</strong> — <a href="https://doi.org/10.1186/s13148-026-02101-4" target="_blank" style="font-size:0.8rem;color:var(--blue);">see publication ↗</a></summary>
+          <div class="detail-body">Multivariate regression with confounder control to estimate impact of external factors on biological age. <span class="methods">Methods: OLS regression, bootstrapping, covariate adjustment, VIF assessment.</span></div>
+        </details>
+        <details><summary><strong>MLOps &amp; Azure</strong></summary>
+          <div class="detail-body">Build and operationalise ML pipelines on Azure ML and Azure DevOps — CI/CD, model deployment, monitoring, integration with Azure Data Lake and Databricks.</div>
+        </details>
+        <details><summary><strong>Mentorship &amp; communication</strong></summary>
+          <div class="detail-body">Supervise and mentor working students and new joiners. Represented the team in presentations to Members of the European Parliament.</div>
+        </details>
       </div>
-      <div class="entry-org">Shutterstock, Inc. · Dublin, IE</div>
-      <ul class="bullets">
-        <li>Led the <strong>Search Fusion</strong> project to merge results from multiple recommendation systems based on rank.</li>
-        <li>Implemented reciprocal rank fusion, achieving a <strong>10% improvement</strong> in accuracy over benchmark systems.</li>
-      </ul>
-    </div>
 
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">Cloud Integration Engineer</span>
-        <span class="entry-date">June 2020 — Feb 2022</span>
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--purple);"></div>
+        <div class="tl-header">
+          <span class="tl-title">Data Scientist</span>
+          <span class="tl-date" style="background:var(--purple);">Feb 2022 — Aug 2022</span>
+        </div>
+        <div class="tl-org">Shutterstock, Inc. · Dublin, IE</div>
+        <ul class="bullets">
+          <li>Led the <strong>Search Fusion</strong> project merging results from multiple recommendation systems by rank.</li>
+          <li>Implemented reciprocal rank fusion, achieving a <strong>10% improvement</strong> in accuracy over benchmarks.</li>
+        </ul>
       </div>
-      <div class="entry-org">Ericsson · Dublin, IE</div>
-      <ul class="bullets">
-        <li>Primary support contact for global internal stakeholders; handled Customer Support Requests and provided technical guidance.</li>
-        <li>Led integration and deployment of Ericsson cloud solutions across Linux, MySQL, Kubernetes, Docker, and OpenStack.</li>
-        <li>Integrated Cloud Container Distribution (CCD) clusters; deployed applications from Docker images in Kubernetes pods.</li>
-        <li>Owned integration planning and deployment of Ericsson's Cloud Execution Environment, including acceptance testing for SDI.</li>
-        <li>Customers included AT&amp;T, Three IE, NTT Docomo, and Bharti Airtel.</li>
-      </ul>
-    </div>
 
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">Database &amp; Information Systems Demonstrator</span>
-        <span class="entry-date">Sept 2019 — Dec 2019</span>
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--teal);"></div>
+        <div class="tl-header">
+          <span class="tl-title">Cloud Integration Engineer</span>
+          <span class="tl-date" style="background:var(--teal);">June 2020 — Feb 2022</span>
+        </div>
+        <div class="tl-org">Ericsson · Dublin, IE</div>
+        <ul class="bullets">
+          <li>Primary support contact for global internal stakeholders; handled CSRs and provided technical guidance.</li>
+          <li>Led integration and deployment of Ericsson cloud solutions across Linux, MySQL, Kubernetes, Docker, and OpenStack.</li>
+          <li>Integrated CCD clusters; deployed applications from Docker images in Kubernetes pods.</li>
+          <li>Owned integration planning and deployment of Ericsson's Cloud Execution Environment, including acceptance testing for SDI.</li>
+          <li>Customers included AT&amp;T, Three IE, NTT Docomo, and Bharti Airtel.</li>
+        </ul>
       </div>
-      <div class="entry-org">University College Dublin · Dublin, IE</div>
-      <ul class="bullets">
-        <li>Demonstrator for the second-year undergraduate Computer Science module; graded weekly and final SQL assignments.</li>
-      </ul>
+
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--yellow);"></div>
+        <div class="tl-header">
+          <span class="tl-title">Database &amp; Information Systems Demonstrator</span>
+          <span class="tl-date" style="background:var(--yellow);color:var(--ink);">Sept 2019 — Dec 2019</span>
+        </div>
+        <div class="tl-org">University College Dublin · Dublin, IE</div>
+        <ul class="bullets">
+          <li>Demonstrator for the second-year undergraduate Computer Science module; graded weekly and final SQL assignments.</li>
+        </ul>
+      </div>
+
     </div>
   </section>
 
   <!-- EDUCATION -->
   <section id="education">
-    <h2>Education</h2>
-
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">MSc Computer Science</span>
-        <span class="entry-date">Sept 2019 — Aug 2020</span>
-      </div>
-      <div class="entry-org">University College Dublin · GPA 3.57/4.2 (2:1 Honours) · 90 ECTS</div>
-      <p style="font-size:0.88rem;color:#475569;">Advanced Machine Learning, Big Data, NLP, Multi-Agent Systems (AI), SQL Programming, Data Visualisation.</p>
+    <div class="section-label">
+      <span class="section-num">03</span>
+      <span class="section-title">Education</span>
+      <span class="section-line"></span>
     </div>
-
-    <div class="entry">
-      <div class="entry-header">
-        <span class="entry-title">MSc Electrical &amp; Computer Engineering</span>
-        <span class="entry-date">Oct 2013 — Nov 2018</span>
+    <div class="timeline">
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--blue);"></div>
+        <div class="tl-header">
+          <span class="tl-title">MSc Computer Science</span>
+          <span class="tl-date" style="background:var(--blue);">2019 — 2020</span>
+        </div>
+        <div class="tl-org">University College Dublin · GPA 3.57/4.2 (2:1 Honours) · 90 ECTS</div>
+        <p style="font-size:0.87rem;color:var(--soft);margin-top:0.2rem;">Advanced Machine Learning, Big Data, NLP, Multi-Agent Systems (AI), SQL Programming, Data Visualisation.</p>
       </div>
-      <div class="entry-org">Democritus University of Thrace · GPA 7.8/10.0 (2:1 Honours) · 300 ECTS</div>
-      <p style="font-size:0.88rem;color:#475569;">Machine Learning, Robotics, Numerical Analysis, Data Mining, Information Retrieval, Linear Algebra.</p>
+      <div class="tl-entry">
+        <div class="tl-dot" style="color:var(--pink);"></div>
+        <div class="tl-header">
+          <span class="tl-title">MSc Electrical &amp; Computer Engineering</span>
+          <span class="tl-date" style="background:var(--pink);">2013 — 2018</span>
+        </div>
+        <div class="tl-org">Democritus University of Thrace · GPA 7.8/10.0 (2:1 Honours) · 300 ECTS</div>
+        <p style="font-size:0.87rem;color:var(--soft);margin-top:0.2rem;">Machine Learning, Robotics, Numerical Analysis, Data Mining, Information Retrieval, Linear Algebra.</p>
+      </div>
     </div>
   </section>
 
-  <!-- PUBLICATIONS & TALKS -->
+  <!-- PUBLICATIONS -->
   <section id="publications">
-    <h2>Publications &amp; Talks</h2>
-
-    <div class="pub" style="margin-bottom:1rem;">
-      <strong>Unraveling the complexity of skin's biological aging utilizing epigenetic clocks.</strong><br>
-      Bienkowska A, Qi M, <strong>Kanta K</strong>, Bonilla-Tobar M del P, Völzke H, Gallinat S, Jaspers S, Clemann S, Winnefeld M, Grönniger E, Kaderali L.<br>
-      <em>Clinical Epigenetics</em> 18, 58 (2026). <a href="https://doi.org/10.1186/s13148-026-02101-4" target="_blank">doi:10.1186/s13148-026-02101-4</a><br>
-      <span style="font-size:0.82rem;color:#64748b;">Contributed the section on Skinly — Beiersdorf's handheld IoT device for objective phenotypic skin measurements — and the associated phenotypic-aging analysis.</span>
+    <div class="section-label">
+      <span class="section-num">04</span>
+      <span class="section-title">Publications &amp; Talks</span>
+      <span class="section-line"></span>
     </div>
 
-    <div class="pub">
-      <strong>AI in Healthcare</strong> — Invited guest lecture, University of Portsmouth (host: Dr Elisavet Andrikopoulou). April 2026.
+    <div class="pub-card paper">
+      <div class="pub-type">Journal Article · 2026</div>
+      <p><strong>Unraveling the complexity of skin's biological aging utilizing epigenetic clocks.</strong><br>
+      Bienkowska A, Qi M, <strong>Kanta K</strong>, Bonilla-Tobar M del P, Völzke H, Gallinat S, Jaspers S, Clemann S, Winnefeld M, Grönniger E, Kaderali L.<br>
+      <em>Clinical Epigenetics</em> 18, 58 (2026). <a href="https://doi.org/10.1186/s13148-026-02101-4" target="_blank">doi:10.1186/s13148-026-02101-4 ↗</a><br>
+      <span style="font-size:0.82rem;color:#999;">Contributed the section on Skinly — Beiersdorf's handheld IoT device for phenotypic skin measurements — and the associated phenotypic-aging analysis.</span></p>
+    </div>
+
+    <div class="pub-card talk">
+      <div class="pub-type">Invited Lecture · April 2026</div>
+      <p><strong>AI in Healthcare</strong> — University of Portsmouth (host: Dr Elisavet Andrikopoulou).</p>
     </div>
   </section>
 
   <!-- SKILLS -->
   <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-label">Programming &amp; ML</div>
-        <div class="skill-value">Python (pandas, NumPy, scikit-learn, PyTorch, TensorFlow), R, SQL, C/C++, Java, JavaScript</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Data &amp; Big Data</div>
-        <div class="skill-value">Spark, Hadoop, Databricks, MongoDB</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Cloud &amp; MLOps</div>
-        <div class="skill-value">Azure ML, Azure DevOps, Azure Data Lake, Databricks, Docker, Kubernetes, Git, CI/CD</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Statistics &amp; ML</div>
-        <div class="skill-value">Time-series forecasting, regression, A/B testing, clustering, NLP, LLM prompt engineering</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Computer Vision</div>
-        <div class="skill-value">Object detection, OCR, image-pipeline development</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Visualisation</div>
-        <div class="skill-value">Power BI, Tableau, Vega-Lite, Plotly</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Tools</div>
-        <div class="skill-value">Jupyter, VS Code, Linux/Ubuntu, MATLAB, Jira</div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-label">Languages</div>
-        <div class="skill-value">Greek (native), English (fluent)</div>
-      </div>
+    <div class="section-label">
+      <span class="section-num">05</span>
+      <span class="section-title">Skills</span>
+      <span class="section-line"></span>
     </div>
-
-    <div style="margin-top:1.2rem;font-size:0.88rem;color:#64748b;">
-      <strong>Certifications &amp; Courses</strong>
-      <ul style="margin-top:0.4rem;padding-left:1.3rem;">
-        <li>Run Pipelines in Azure Machine Learning — Microsoft Learn badge, March 2026</li>
-        <li>Skin Anatomy and Physiology — UCD Microcredential, April 2026</li>
-      </ul>
+    <div class="skills-section">
+      <div class="skill-row">
+        <div class="skill-cat">Programming &amp; ML</div>
+        <div class="tags">
+          <span class="tag tag-coral">Python</span><span class="tag tag-coral">pandas</span><span class="tag tag-coral">NumPy</span><span class="tag tag-coral">scikit-learn</span><span class="tag tag-coral">PyTorch</span><span class="tag tag-coral">TensorFlow</span><span class="tag tag-coral">R</span><span class="tag tag-coral">SQL</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Cloud &amp; MLOps</div>
+        <div class="tags">
+          <span class="tag tag-blue">Azure ML</span><span class="tag tag-blue">Azure DevOps</span><span class="tag tag-blue">Azure Data Lake</span><span class="tag tag-blue">Databricks</span><span class="tag tag-blue">Docker</span><span class="tag tag-blue">Kubernetes</span><span class="tag tag-blue">CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Data &amp; Big Data</div>
+        <div class="tags">
+          <span class="tag tag-teal">Spark</span><span class="tag tag-teal">Hadoop</span><span class="tag tag-teal">Databricks</span><span class="tag tag-teal">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Methods</div>
+        <div class="tags">
+          <span class="tag tag-purple">Time-series</span><span class="tag tag-purple">Regression</span><span class="tag tag-purple">Clustering</span><span class="tag tag-purple">NLP</span><span class="tag tag-purple">Computer Vision</span><span class="tag tag-purple">A/B testing</span><span class="tag tag-purple">LLM prompting</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Visualisation</div>
+        <div class="tags">
+          <span class="tag tag-yellow">Power BI</span><span class="tag tag-yellow">Tableau</span><span class="tag tag-yellow">Vega-Lite</span><span class="tag tag-yellow">Plotly</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-cat">Languages</div>
+        <div class="tags">
+          <span class="tag tag-pink">Greek (native)</span><span class="tag tag-pink">English (fluent)</span>
+        </div>
+      </div>
+      <div class="certs-row">
+        <div class="skill-cat" style="color:var(--ink);">Certifications &amp; Courses</div>
+        <ul>
+          <li>Run Pipelines in Azure Machine Learning — Microsoft Learn badge, March 2026</li>
+          <li>Skin Anatomy and Physiology — UCD Microcredential, April 2026</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section id="projects">
-    <h2>Projects</h2>
+    <div class="section-label">
+      <span class="section-num">06</span>
+      <span class="section-title">Projects</span>
+      <span class="section-line"></span>
+    </div>
     <div class="projects-grid">
-
-      <div class="project-card">
+      <div class="project-card pc-1">
         <div class="badge">Research</div>
         <h3>Pneumonia Detection from Chest X-rays</h3>
-        <p>Compared four deep-learning architectures (logistic regression baseline, LeNet-5, custom CNN with data augmentation, VGG16) for binary pneumonia classification on chest X-ray images. Transfer learning from ImageNet with VGG16 performed best. Implemented in Python with scikit-learn, OpenCV, Keras, and PyTorch.</p>
+        <p>Compared four deep-learning architectures (logistic regression baseline, LeNet-5, custom CNN with data augmentation, VGG16) for binary pneumonia classification. Transfer learning from ImageNet with VGG16 performed best. Built in Python with scikit-learn, OpenCV, Keras, and PyTorch.</p>
       </div>
-
-      <div class="project-card">
+      <div class="project-card pc-2">
         <div class="badge">Research</div>
         <h3>Fusing Rankings in Information Retrieval with Voting Systems</h3>
-        <p>Diploma thesis at DUTh. Evaluated voting-system approaches to rank fusion (Borda, RRF, Condorcet, CombSUM/MNZ) on standard IR test collections using TREC Eval. Reciprocal rank fusion proved consistently strongest — the same method later drove a 10% accuracy gain at Shutterstock.</p>
+        <p>Diploma thesis at DUTh. Evaluated rank fusion approaches (Borda, RRF, Condorcet, CombSUM/MNZ) on IR test collections using TREC Eval. Reciprocal rank fusion proved consistently strongest — the same method later drove a 10% accuracy gain at Shutterstock.</p>
       </div>
-
-      <div class="project-card">
+      <div class="project-card pc-3">
         <div class="badge">Code</div>
         <h3>Multi-label Classifier from Scratch</h3>
-        <p>From-scratch implementation of Binary Relevance (with optional under-sampling) and Classifier Chains for multi-label classification. Built to internalise every design decision — thresholding, imbalance handling, label-correlation effects — rather than relying on library defaults.</p>
+        <p>From-scratch implementation of Binary Relevance (with optional under-sampling) and Classifier Chains for multi-label classification. Built to internalise every design decision — thresholding, imbalance handling, label-correlation effects.</p>
       </div>
-
-      <div class="project-card">
+      <div class="project-card pc-4">
         <div class="badge">Code · Coming soon</div>
         <h3>rrf — Reciprocal Rank Fusion library</h3>
-        <p>A small open-source Python package implementing RRF and related fusion methods (Borda, CombSUM, CombMNZ), plus a reproducible benchmark notebook on a public IR dataset. Motivated by RRF's recurring role in my work — from my thesis through Shutterstock to modern RAG pipelines.</p>
+        <p>A small open-source Python package implementing RRF and related fusion methods (Borda, CombSUM, CombMNZ), plus a reproducible benchmark notebook. Motivated by RRF's recurring role in my work — from my thesis through Shutterstock to modern RAG pipelines.</p>
       </div>
-
     </div>
   </section>
 
 </main>
 
 <footer>
-  <p>Konstantina Kanta · Hamburg · <a href="mailto:konstantinakanta@pm.me">konstantinakanta@pm.me</a></p>
+  <p>Konstantina Kanta · Hamburg · <a href="mailto:konstantinakanta@pm.me">konstantinakanta@pm.me</a> · <a href="https://github.com/konstantinakanta" target="_blank">GitHub</a></p>
 </footer>
 
 </body>
